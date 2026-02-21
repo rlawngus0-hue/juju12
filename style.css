@@ -205,6 +205,61 @@ input[type="number"] {
     text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
+/* 주사위 디자인 */
+.dice-area {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.dice {
+    width: 80px;
+    height: 80px;
+    background: white;
+    color: #333;
+    border-radius: 15px;
+    font-size: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border: 4px solid var(--accent-color);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+/* 슬롯머신 디자인 */
+.slot-machine {
+    display: flex;
+    gap: 15px;
+    background: #222;
+    padding: 20px;
+    border: 4px solid var(--accent-color);
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.slot-reel {
+    width: 80px;
+    height: 100px;
+    background: white;
+    border-radius: 5px;
+    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+/* 하이로우 디자인 */
+.card-display {
+    padding: 30px;
+    background: #000;
+    border-radius: 15px;
+    border: 2px solid var(--accent-color);
+    margin-bottom: 20px;
+}
+
 /* 사다리 캔버스 */
 #ladder-canvas {
     width: 100%;
