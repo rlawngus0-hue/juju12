@@ -214,6 +214,18 @@
         <section id="comment-section">
             <h2 class="comment-title">💬 커뮤니티 의견</h2>
             <div id="disqus_thread"></div>
+            <script>
+                var disqus_config = function () {
+                    this.page.url = window.location.href;  
+                    this.page.identifier = 'juju12-v2'; 
+                };
+                (function() { 
+                    var d = document, s = d.createElement('script');
+                    s.src = 'https://juju12.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            </script>
         </section>
     </main>
 
