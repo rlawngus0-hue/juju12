@@ -9,7 +9,7 @@
 <body>
     <header>
         <div class="container">
-            <h1 id="logo">JU TOTO</h1>
+            <h1 id="logo" onclick="showPage('home')">JU TOTO</h1>
             <nav>
                 <ul>
                     <li onclick="showPage('home')">홈</li>
@@ -79,6 +79,12 @@
                         <button onclick="setBet('odd', 'ladder')">홀 (1.9x)</button>
                         <button onclick="setBet('even', 'ladder')">짝 (1.9x)</button>
                     </div>
+                    <div class="quick-bet-btns">
+                        <button class="btn-quick" onclick="quickBet('ladder', 100)">100</button>
+                        <button class="btn-quick" onclick="quickBet('ladder', 500)">500</button>
+                        <button class="btn-quick" onclick="quickBet('ladder', 1000)">1K</button>
+                        <button class="btn-quick" onclick="quickBet('ladder', 'all')">ALL</button>
+                    </div>
                     <input type="number" id="ladder-bet-amount" placeholder="베팅 금액" min="100">
                     <button class="btn-start" onclick="startLadder()">게임 시작</button>
                 </div>
@@ -97,6 +103,12 @@
                     <div class="bet-options">
                         <button class="red" onclick="setBet('red', 'roulette')">빨강 (2x)</button>
                         <button class="black" onclick="setBet('black', 'roulette')">검정 (2x)</button>
+                    </div>
+                    <div class="quick-bet-btns">
+                        <button class="btn-quick" onclick="quickBet('roulette', 100)">100</button>
+                        <button class="btn-quick" onclick="quickBet('roulette', 500)">500</button>
+                        <button class="btn-quick" onclick="quickBet('roulette', 1000)">1K</button>
+                        <button class="btn-quick" onclick="quickBet('roulette', 'all')">ALL</button>
                     </div>
                     <input type="number" id="roulette-bet-amount" placeholder="베팅 금액" min="100">
                     <button class="btn-start" onclick="startRoulette()">돌리기</button>
@@ -118,6 +130,12 @@
                         <button onclick="setBet('big', 'dice')">대 (8-12, 2x)</button>
                         <button onclick="setBet('seven', 'dice')">7 (5x)</button>
                     </div>
+                    <div class="quick-bet-btns">
+                        <button class="btn-quick" onclick="quickBet('dice', 100)">100</button>
+                        <button class="btn-quick" onclick="quickBet('dice', 500)">500</button>
+                        <button class="btn-quick" onclick="quickBet('dice', 1000)">1K</button>
+                        <button class="btn-quick" onclick="quickBet('dice', 'all')">ALL</button>
+                    </div>
                     <input type="number" id="dice-bet-amount" placeholder="베팅 금액" min="100">
                     <button class="btn-start" onclick="startDice()">주사위 굴리기</button>
                 </div>
@@ -134,6 +152,12 @@
                     <div class="slot-reel" id="reel-3">🔔</div>
                 </div>
                 <div class="betting-controls">
+                    <div class="quick-bet-btns">
+                        <button class="btn-quick" onclick="quickBet('slot', 100)">100</button>
+                        <button class="btn-quick" onclick="quickBet('slot', 500)">500</button>
+                        <button class="btn-quick" onclick="quickBet('slot', 1000)">1K</button>
+                        <button class="btn-quick" onclick="quickBet('slot', 'all')">ALL</button>
+                    </div>
                     <input type="number" id="slot-bet-amount" placeholder="베팅 금액" min="100">
                     <button class="btn-start" onclick="startSlot()">레버 당기기</button>
                     <p style="font-size: 0.8rem; color: #ccc;">3개 일치: 10배 | 2개 일치: 2배</p>
@@ -153,6 +177,12 @@
                     <div class="bet-options">
                         <button onclick="setBet('high', 'hilow')">높음 (High)</button>
                         <button onclick="setBet('low', 'hilow')">낮음 (Low)</button>
+                    </div>
+                    <div class="quick-bet-btns">
+                        <button class="btn-quick" onclick="quickBet('hilow', 100)">100</button>
+                        <button class="btn-quick" onclick="quickBet('hilow', 500)">500</button>
+                        <button class="btn-quick" onclick="quickBet('hilow', 1000)">1K</button>
+                        <button class="btn-quick" onclick="quickBet('hilow', 'all')">ALL</button>
                     </div>
                     <input type="number" id="hilow-bet-amount" placeholder="베팅 금액" min="100">
                     <button class="btn-start" onclick="startHiLow()">결과 확인 (2x)</button>

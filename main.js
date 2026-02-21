@@ -56,6 +56,17 @@ function setBet(option, type) {
     event.target.classList.add('selected');
 }
 
+function quickBet(type, value) {
+    if (isGameRunning) return;
+    const input = document.getElementById(`${type}-bet-amount`);
+    if (value === 'all') {
+        input.value = points;
+    } else {
+        const currentVal = parseInt(input.value) || 0;
+        input.value = currentVal + value;
+    }
+}
+
 // --- Dice Game Logic ---
 function startDice() {
     if (isGameRunning) return;

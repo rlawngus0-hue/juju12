@@ -11,13 +11,12 @@
     --wood: #3e2723;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic:wght@400;700;800&display=swap');
 
 body {
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif; /* 둥근 글씨체 */
     margin: 0;
     padding: 0;
-    /* 더욱 어두워진 배경 그라데이션 */
     background: radial-gradient(circle at center, #1a6d41 0%, #0d4d2b 70%, #1a0000 100%);
     background-attachment: fixed;
     color: var(--text-color);
@@ -46,6 +45,7 @@ header .container {
     font-size: clamp(20px, 5vw, 30px);
     text-shadow: 2px 2px 0px #000;
     margin: 0;
+    cursor: pointer; /* 클릭 가능 표시 */
 }
 
 nav ul {
@@ -132,6 +132,29 @@ main {
     border: 1px solid #5d4037;
     width: 100%;
     box-sizing: border-box;
+}
+
+/* 퀵 베팅 버튼 스타일 */
+.quick-bet-btns {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+
+.btn-quick {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    border-radius: 15px; /* 둥글게 */
+    cursor: pointer;
+}
+
+.btn-quick:hover {
+    background: var(--accent-color);
+    color: #000;
 }
 
 .bet-options { display: flex; gap: 8px; margin-bottom: 12px; justify-content: center; flex-wrap: wrap; }
