@@ -4,9 +4,9 @@
     --neon-blue: #00ffff;
     --neon-purple: #bc13fe;
     --neon-yellow: #f5ed00;
-    --gold: #ffd700;
     --text-white: #ffffff;
     --card-bg: rgba(255, 255, 255, 0.1);
+    --gold: #ffd700;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic:wght@400;700;800&display=swap');
@@ -21,9 +21,10 @@ body {
     overflow-x: hidden;
 }
 
-/* 헤더 - 화려한 네온 라인 */
+.container { width: 95%; max-width: 900px; margin: 0 auto; }
+
 header {
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.9);
     border-bottom: 3px solid var(--neon-pink);
     box-shadow: 0 0 15px var(--neon-pink);
     padding: 10px 0;
@@ -32,166 +33,82 @@ header {
     z-index: 1000;
 }
 
-header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-}
+header .container { display: flex; justify-content: space-between; align-items: center; }
 
 #logo {
     font-family: 'Black Han Sans', sans-serif;
     color: var(--neon-yellow);
-    font-size: clamp(24px, 5vw, 36px);
-    text-shadow: 0 0 10px var(--neon-yellow), 0 0 20px #f5ed00;
+    font-size: clamp(20px, 5vw, 32px);
+    text-shadow: 0 0 10px var(--neon-yellow);
     cursor: pointer;
 }
 
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-    padding: 0;
-}
+nav ul { list-style: none; display: flex; gap: 10px; padding: 0; margin: 0; }
+nav ul li { cursor: pointer; font-weight: 800; color: var(--neon-blue); font-size: 0.85rem; }
+nav ul li:hover { text-shadow: 0 0 10px var(--neon-blue); }
 
-nav ul li {
-    cursor: pointer;
-    font-weight: 800;
-    color: var(--neon-blue);
-    text-shadow: 0 0 5px var(--neon-blue);
-}
+.user-info { background: rgba(0,0,0,0.5); padding: 5px 12px; border-radius: 20px; border: 2px solid var(--neon-purple); font-size: 0.8rem; }
+.btn-logout { background: transparent; color: #aaa; border: none; cursor: pointer; margin-left: 5px; font-size: 0.7rem; }
 
-.user-info {
-    background: rgba(0,0,0,0.5);
-    padding: 8px 15px;
-    border-radius: 20px;
-    border: 2px solid var(--neon-purple);
-    box-shadow: 0 0 10px var(--neon-purple);
-}
+main { padding: 20px 0; }
+.page { display: none; text-align: center; min-height: 60vh; }
+.page.active { display: block; animation: fadeIn 0.4s ease-out; }
 
-/* 게임 카드 - 알록달록 디자인 */
-.game-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
-    margin-top: 20px;
-}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-.card {
-    background: var(--card-bg);
-    border: 2px solid var(--neon-blue);
-    border-radius: 15px;
-    padding: 20px;
-    cursor: pointer;
-    transition: 0.3s;
-    text-align: center;
-}
+/* Hero & Cards */
+.hero { background: rgba(0,0,0,0.4); padding: 40px 20px; border-radius: 20px; border: 1px solid var(--neon-blue); margin-bottom: 30px; }
+.game-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; }
+.card { background: var(--card-bg); border: 2px solid var(--neon-blue); border-radius: 15px; padding: 20px; cursor: pointer; transition: 0.3s; }
+.card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.2); }
+.card h3 { font-family: 'Black Han Sans', sans-serif; margin: 0 0 10px 0; font-size: 1.4rem; }
 
-.card:nth-child(1) { border-color: var(--neon-pink); box-shadow: inset 0 0 10px var(--neon-pink); }
-.card:nth-child(2) { border-color: var(--neon-blue); box-shadow: inset 0 0 10px var(--neon-blue); }
-.card:nth-child(3) { border-color: var(--neon-yellow); box-shadow: inset 0 0 10px var(--neon-yellow); }
-.card:nth-child(4) { border-color: var(--neon-purple); box-shadow: inset 0 0 10px var(--neon-purple); }
-.card:nth-child(5) { border-color: #00ff00; box-shadow: inset 0 0 10px #00ff00; }
+/* Game Elements */
+.game-header h2 { font-family: 'Black Han Sans', sans-serif; color: var(--neon-yellow); text-shadow: 0 0 10px var(--neon-yellow); margin-bottom: 20px; }
+.game-container { background: rgba(0,0,0,0.8); padding: 20px; border-radius: 20px; border: 3px solid var(--neon-blue); box-shadow: 0 0 20px var(--neon-blue); display: inline-block; max-width: 100%; box-sizing: border-box; }
+.betting-controls { margin-top: 15px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; }
+.bet-options { display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap; }
+.bet-options button { padding: 8px 15px; font-family: 'Black Han Sans', sans-serif; background: #333; color: white; border: 2px solid transparent; border-radius: 5px; }
+.bet-options button.selected { border-color: var(--neon-yellow); background: var(--neon-purple); box-shadow: 0 0 10px var(--neon-yellow); }
 
-.card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.2); }
-.card h3 { font-family: 'Black Han Sans', sans-serif; color: white; margin-bottom: 5px; }
+.quick-bet-btns { display: flex; gap: 5px; justify-content: center; margin-bottom: 10px; }
+.btn-quick { background: #111; color: var(--neon-blue); border: 1px solid var(--neon-blue); padding: 4px 8px; border-radius: 10px; font-size: 0.7rem; cursor: pointer; }
+.btn-start { background: linear-gradient(to right, var(--neon-pink), var(--neon-purple)); color: white; padding: 12px; border-radius: 8px; border: none; width: 100%; max-width: 250px; font-family: 'Black Han Sans', sans-serif; font-size: 1.1rem; box-shadow: 0 0 15px var(--neon-pink); cursor: pointer; }
 
-/* 게임 컨테이너 - 안정적인 가시성 */
-.game-container {
-    background: rgba(0,0,0,0.8);
-    padding: 20px;
-    border-radius: 20px;
-    border: 3px solid var(--neon-blue);
-    box-shadow: 0 0 20px var(--neon-blue);
-    display: inline-block;
-    max-width: 100%;
-    margin: 20px auto;
-}
+input[type="number"] { width: 120px; padding: 8px; margin-bottom: 10px; border-radius: 5px; border: none; text-align: center; background: #eee; }
 
-.betting-controls {
-    margin-top: 15px;
-    background: rgba(255,255,255,0.05);
-    padding: 15px;
-    border-radius: 10px;
-}
+/* Specific Game UI */
+#ladder-canvas { max-width: 300px; height: auto; background: #000; border: 4px solid #333; border-radius: 10px; }
+.roulette-wrapper { width: 260px; height: 260px; margin: 0 auto; position: relative; border: 6px solid white; border-radius: 50%; box-shadow: 0 0 15px white; }
+#roulette-wheel { width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(#ff0055 0deg 45deg, #111 45deg 90deg, #ff0055 90deg 135deg, #111 135deg 180deg, #ff0055 180deg 225deg, #111 225deg 270deg, #ff0055 270deg 315deg, #111 315deg 360deg); transition: transform 4s cubic-bezier(0.1, 0, 0.1, 1); }
+#roulette-pointer { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 30px; color: var(--neon-yellow); z-index: 10; }
 
-/* 버튼 & 입력창 */
-button {
-    font-family: 'Black Han Sans', sans-serif;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.2s;
-}
+.slot-machine { display: flex; gap: 10px; background: #000; padding: 15px; border: 3px solid var(--neon-yellow); border-radius: 15px; margin-bottom: 15px; }
+.slot-reel { width: 70px; height: 90px; background: white; color: black; border-radius: 5px; font-size: 2.5rem; display: flex; align-items: center; justify-content: center; }
 
-.btn-start {
-    background: linear-gradient(to right, var(--neon-pink), var(--neon-purple));
-    color: white;
-    font-size: 1.2rem;
-    padding: 12px;
-    border: none;
-    width: 100%;
-    box-shadow: 0 0 15px var(--neon-pink);
-}
+#hilow-num-display { font-size: 4rem; color: var(--neon-pink); font-family: 'Black Han Sans', sans-serif; text-shadow: 0 0 15px var(--neon-pink); margin-bottom: 10px; }
+.card-display { background: rgba(0,0,0,0.5); padding: 20px; border-radius: 15px; border: 2px solid var(--neon-blue); margin-bottom: 15px; }
 
-button.selected {
-    background: var(--neon-yellow) !important;
-    color: #000 !important;
-    box-shadow: 0 0 20px var(--neon-yellow);
-}
+/* Ranking & Comments */
+#ranking-section { background: rgba(0,0,0,0.6); border: 2px solid var(--neon-yellow); padding: 20px; border-radius: 15px; margin-top: 40px; }
+.ranking-title { font-family: 'Black Han Sans', sans-serif; color: var(--neon-yellow); margin-bottom: 15px; }
+#ranking-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+#ranking-table th { color: var(--neon-blue); border-bottom: 2px solid var(--neon-blue); padding: 10px; }
+#ranking-table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.my-rank { background: rgba(255, 215, 0, 0.2); }
 
-/* 룰렛 가시성 복구 */
-.roulette-wrapper {
-    width: 280px; height: 280px;
-    margin: 0 auto;
-    position: relative;
-    border: 8px solid white;
-    border-radius: 50%;
-    box-shadow: 0 0 20px white;
-    overflow: visible; /* 포인터 노출 */
-}
+#comment-section { margin-top: 40px; padding: 20px; background: white; border-radius: 15px; border: 4px solid var(--neon-purple); color: #000; }
+.comment-title { font-family: 'Black Han Sans', sans-serif; color: var(--bg-dark); margin-bottom: 20px; text-align: center; }
 
-#roulette-wheel {
-    width: 100%; height: 100%;
-    border-radius: 50%;
-    background: conic-gradient(
-        #ff0055 0deg 45deg, #111 45deg 90deg,
-        #ff0055 90deg 135deg, #111 135deg 180deg,
-        #ff0055 180deg 225deg, #111 225deg 270deg,
-        #ff0055 270deg 315deg, #111 315deg 360deg
-    );
-    transition: transform 4s cubic-bezier(0.1, 0, 0.1, 1);
-}
+footer { padding: 30px; text-align: center; font-size: 0.7rem; color: #777; }
 
-/* 댓글 섹션 - 알록달록하지만 가독성 높게 */
-#comment-section {
-    margin-top: 50px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.95); /* 흰색 배경으로 댓글 확실히 보임 */
-    border-radius: 20px;
-    border: 5px solid var(--neon-purple);
-    color: #000;
-}
+/* Modal */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: flex; justify-content: center; align-items: center; z-index: 2000; }
+.modal-content { background: var(--bg-dark); border: 3px solid var(--neon-pink); padding: 40px; border-radius: 20px; text-align: center; box-shadow: 0 0 30px var(--neon-pink); }
+.modal-content h2 { font-family: 'Black Han Sans', sans-serif; color: var(--neon-yellow); margin-bottom: 10px; }
+.modal-content input { padding: 10px; width: 200px; border-radius: 5px; border: none; margin: 15px 0; font-size: 1rem; }
 
-#comment-section .ranking-title { color: var(--bg-dark); text-shadow: none; margin-bottom: 20px; }
-
-#disqus_thread { background: white; padding: 10px; border-radius: 10px; }
-
-/* 랭킹 섹션 */
-#ranking-section {
-    background: rgba(0, 0, 0, 0.6);
-    border: 2px solid var(--neon-yellow);
-    padding: 20px;
-    border-radius: 15px;
-    margin-top: 30px;
-}
-
-.ranking-title { color: var(--neon-yellow); text-align: center; font-size: 1.8rem; }
-
-#ranking-table th { color: var(--neon-blue); border-bottom: 2px solid var(--neon-blue); }
-
-.container { width: 95%; max-width: 900px; margin: 0 auto; }
-
-/* 주사위, 슬롯 등 요소 크기 고정 */
-.dice { background: white; color: black; border: 3px solid var(--neon-pink); }
-.slot-machine { background: #000; border: 3px solid var(--neon-yellow); }
-.slot-reel { background: white; color: black; }
+/* Mobile Colors */
+.btn-red { background: #ff0055 !important; }
+.btn-black { background: #111 !important; border-color: #333 !important; }
+.game-info { font-size: 0.75rem; color: #aaa; margin-top: 10px; }

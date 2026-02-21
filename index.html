@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>주토토 (Jutoto) - 스포츠 시뮬레이션</title>
+    <title>주토토 (Jutoto) - 프리미엄 카지노</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,15 +15,14 @@
                     <li onclick="showPage('home')">홈</li>
                     <li onclick="showPage('ladder')">사다리</li>
                     <li onclick="showPage('roulette')">룰렛</li>
-                    <li onclick="showPage('dice')">주사위</li>
                     <li onclick="showPage('slot')">슬롯</li>
                     <li onclick="showPage('hilow')">하이로우</li>
                 </ul>
             </nav>
             <div class="user-info">
-                <span id="user-nickname" style="color: var(--accent-color); margin-right: 10px;"></span>
-                보유 포인트: <span id="user-points">10,000</span>P
-                <button onclick="logout()" style="margin-left:10px; padding: 2px 8px; font-size: 0.8rem; background: #444; color: white; border: none; border-radius: 3px; cursor: pointer;">변경</button>
+                <span id="user-nickname" style="color: var(--neon-yellow); margin-right: 10px;"></span>
+                보유: <span id="user-points">10,000</span>P
+                <button onclick="logout()" class="btn-logout">변경</button>
             </div>
         </div>
     </header>
@@ -32,7 +31,7 @@
     <div id="nickname-modal" class="modal-overlay">
         <div class="modal-content">
             <h2>타짜의 성함이 어떻게 되시는가?</h2>
-            <p>닉네임을 입력하고 게임을 시작하세요.</p>
+            <p>닉네임을 입력하고 입성하세요.</p>
             <input type="text" id="nickname-input" placeholder="닉네임 입력 (최대 8자)" maxlength="8">
             <button class="btn-start" onclick="saveNickname()">입장하기</button>
         </div>
@@ -42,36 +41,32 @@
         <!-- 홈 페이지 -->
         <section id="page-home" class="page active">
             <div class="hero">
-                <h2>신뢰와 재미의 주토토</h2>
-                <p>다양한 게임을 통해 행운을 시험해보세요!</p>
+                <h2>WELCOME TO JUTOTO</h2>
+                <p>최고의 몰입감, 4종의 프리미엄 게임을 즐겨보세요!</p>
             </div>
             <div class="game-cards">
-                <div class="card" onclick="showPage('ladder')">
+                <div class="card card-ladder" onclick="showPage('ladder')">
                     <h3>사다리타기</h3>
-                    <p>홀/짝, 좌/우 선택의 짜릿함</p>
+                    <p>홀/짝의 짜릿한 승부</p>
                 </div>
-                <div class="card" onclick="showPage('roulette')">
+                <div class="card card-roulette" onclick="showPage('roulette')">
                     <h3>행운의 룰렛</h3>
-                    <p>돌아가는 휠에서 대박을 노리세요</p>
+                    <p>회전판의 기적을 믿으세요</p>
                 </div>
-                <div class="card" onclick="showPage('dice')">
-                    <h3>주사위 게임</h3>
-                    <p>두 주사위의 합을 맞춰보세요</p>
-                </div>
-                <div class="card" onclick="showPage('slot')">
+                <div class="card card-slot" onclick="showPage('slot')">
                     <h3>슬롯머신</h3>
-                    <p>세 줄의 기적, 잭팟을 노리세요</p>
+                    <p>777 잭팟을 노려보세요</p>
                 </div>
-                <div class="card" onclick="showPage('hilow')">
+                <div class="card card-hilow" onclick="showPage('hilow')">
                     <h3>하이로우</h3>
-                    <p>다음 숫자가 높을까 낮을까?</p>
+                    <p>높낮이 예측의 끝판왕</p>
                 </div>
             </div>
         </section>
 
         <!-- 사다리 게임 페이지 -->
         <section id="page-ladder" class="page">
-            <h2>사다리타기 게임</h2>
+            <div class="game-header"><h2>LADDER GAME</h2></div>
             <div class="game-container">
                 <canvas id="ladder-canvas" width="400" height="500"></canvas>
                 <div class="betting-controls">
@@ -93,7 +88,7 @@
 
         <!-- 룰렛 게임 페이지 -->
         <section id="page-roulette" class="page">
-            <h2>행운의 룰렛</h2>
+            <div class="game-header"><h2>ROULETTE</h2></div>
             <div class="game-container">
                 <div class="roulette-wrapper">
                     <div id="roulette-wheel"></div>
@@ -101,8 +96,8 @@
                 </div>
                 <div class="betting-controls">
                     <div class="bet-options">
-                        <button class="red" onclick="setBet(this, 'red', 'roulette')">빨강 (2x)</button>
-                        <button class="black" onclick="setBet(this, 'black', 'roulette')">검정 (2x)</button>
+                        <button class="btn-red" onclick="setBet(this, 'red', 'roulette')">RED (2x)</button>
+                        <button class="btn-black" onclick="setBet(this, 'black', 'roulette')">BLACK (2x)</button>
                     </div>
                     <div class="quick-bet-btns">
                         <button class="btn-quick" onclick="quickBet('roulette', 100)">100</button>
@@ -116,35 +111,9 @@
             </div>
         </section>
 
-        <!-- 주사위 게임 페이지 -->
-        <section id="page-dice" class="page">
-            <h2>주사위 게임</h2>
-            <div class="game-container">
-                <div class="dice-area">
-                    <div id="dice-1" class="dice">1</div>
-                    <div id="dice-2" class="dice">1</div>
-                </div>
-                <div class="betting-controls">
-                    <div class="bet-options">
-                        <button onclick="setBet(this, 'small', 'dice')">소 (2-6, 2x)</button>
-                        <button onclick="setBet(this, 'big', 'dice')">대 (8-12, 2x)</button>
-                        <button onclick="setBet(this, 'seven', 'dice')">7 (5x)</button>
-                    </div>
-                    <div class="quick-bet-btns">
-                        <button class="btn-quick" onclick="quickBet('dice', 100)">100</button>
-                        <button class="btn-quick" onclick="quickBet('dice', 500)">500</button>
-                        <button class="btn-quick" onclick="quickBet('dice', 1000)">1K</button>
-                        <button class="btn-quick" onclick="quickBet('dice', 'all')">ALL</button>
-                    </div>
-                    <input type="number" id="dice-bet-amount" placeholder="베팅 금액" min="100">
-                    <button class="btn-start" onclick="startDice()">주사위 굴리기</button>
-                </div>
-            </div>
-        </section>
-
         <!-- 슬롯머신 페이지 -->
         <section id="page-slot" class="page">
-            <h2>슬롯머신</h2>
+            <div class="game-header"><h2>SLOT MACHINE</h2></div>
             <div class="game-container">
                 <div class="slot-machine">
                     <div class="slot-reel" id="reel-1">🍒</div>
@@ -160,18 +129,18 @@
                     </div>
                     <input type="number" id="slot-bet-amount" placeholder="베팅 금액" min="100">
                     <button class="btn-start" onclick="startSlot()">레버 당기기</button>
-                    <p style="font-size: 0.8rem; color: #ccc;">3개 일치: 10배 | 2개 일치: 2배</p>
+                    <p class="game-info">3개 일치: 10배 | 2개 일치: 2배</p>
                 </div>
             </div>
         </section>
 
         <!-- 하이로우 페이지 -->
         <section id="page-hilow" class="page">
-            <h2>하이로우 (High-Low)</h2>
+            <div class="game-header"><h2>HIGH-LOW</h2></div>
             <div class="game-container">
                 <div class="card-display">
-                    <div id="hilow-num-display" style="font-size: 4rem; color: var(--accent-color); font-family: 'Black Han Sans', sans-serif;">?</div>
-                    <p>현재 숫자</p>
+                    <div id="hilow-num-display">?</div>
+                    <p>현재 숫자 (1-10)</p>
                 </div>
                 <div class="betting-controls">
                     <div class="bet-options">
@@ -192,50 +161,38 @@
 
         <!-- 랭킹 섹션 -->
         <section id="ranking-section">
-            <h2 class="ranking-title">🏆 주토토 랭킹 TOP 10</h2>
+            <h2 class="ranking-title">🏆 실시간 타짜 랭킹</h2>
             <div class="ranking-container">
                 <table id="ranking-table">
                     <thead>
-                        <tr>
-                            <th>순위</th>
-                            <th>닉네임</th>
-                            <th>보유 포인트</th>
-                        </tr>
+                        <tr><th>순위</th><th>닉네임</th><th>포인트</th></tr>
                     </thead>
-                    <tbody id="ranking-list">
-                        <!-- JS에서 데이터 삽입 -->
-                    </tbody>
+                    <tbody id="ranking-list"></tbody>
                 </table>
             </div>
         </section>
 
-        <!-- 댓글 섹션 (Disqus) -->
-        <section id="comment-section" style="margin-top: 50px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px;">
-            <h2 class="ranking-title">💬 타짜들의 한마디</h2>
+        <!-- 댓글 섹션 -->
+        <section id="comment-section">
+            <h2 class="comment-title">💬 타짜들의 한마디</h2>
             <div id="disqus_thread"></div>
             <script>
-                /**
-                *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-                *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-                /*
                 var disqus_config = function () {
-                this.page.url = window.location.href;  // 실제 페이지 URL 사용
-                this.page.identifier = 'juju12-main'; // 고유 식별자
+                    this.page.url = window.location.href;
+                    this.page.identifier = 'juju12-v2';
                 };
-                */
-                (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document, s = d.createElement('script');
-                s.src = 'https://juju12.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
+                (function() {
+                    var d = document, s = d.createElement('script');
+                    s.src = 'https://juju12.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
                 })();
             </script>
-            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2026 JU TOTO. 본 사이트는 시뮬레이션용이며 실제 금전 거래를 지원하지 않습니다.</p>
+        <p>&copy; 2026 JUTOTO PREMIUM. 본 사이트는 시뮬레이션용입니다.</p>
     </footer>
 
     <script src="main.js"></script>
