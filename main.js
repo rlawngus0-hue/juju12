@@ -1,47 +1,120 @@
 // Initial State
-let points = 10000;
-let currentBet = null;
+let points = parseInt(localStorage.getItem('jujuPoints')) || 10000;
+let nickname = localStorage.getItem('jujuNickname') || '';
 let isGameRunning = false;
+let currentBet = null;
+
+// Mock Data for Rankings (Initial)
+let rankings = JSON.parse(localStorage.getItem('jujuRankings')) || [
+    { name: '고니', points: 1000000 },
+    { name: '아귀', points: 800000 },
+    { name: '짝귀', points: 500000 },
+    { name: '평경장', points: 300000 },
+    { name: '정마담', points: 150000 }
+];
+
+// Initialize UI
+window.onload = () => {
+    if (!nickname) {
+        document.getElementById('nickname-modal').style.display = 'flex';
+    } else {
+        document.getElementById('nickname-modal').style.display = 'none';
+        document.getElementById('user-nickname').innerText = `[${nickname}]`;
+        updatePointsDisplay();
+        updateRanking();
+    }
+    initLadder();
+};
+
+// --- Nickname & Ranking Logic ---
+function saveNickname() {
+    const input = document.getElementById('nickname-input').value.trim();
+    if (input.length < 2) {
+        alert('닉네임은 최소 2글자 이상이어야 합니다!');
+        return;
+    }
+    nickname = input;
+    localStorage.setItem('jujuNickname', nickname);
+    document.getElementById('nickname-modal').style.display = 'none';
+    document.getElementById('user-nickname').innerText = `[${nickname}]`;
+    updatePointsDisplay();
+    updateRanking();
+}
+
+function updateRanking() {
+    // Current user ranking update
+    const userRankIndex = rankings.findIndex(r => r.name === nickname);
+    if (userRankIndex !== -1) {
+        rankings[userRankIndex].points = points;
+    } else {
+        rankings.push({ name: nickname, points: points });
+    }
+
+    // Sort rankings by points
+    rankings.sort((a, b) => b.points - a.points);
+    
+    // Save to localStorage
+    localStorage.setItem('jujuRankings', JSON.stringify(rankings.slice(0, 15)));
+
+    // Render Ranking Table
+    const list = document.getElementById('ranking-list');
+    list.innerHTML = '';
+    
+    rankings.slice(0, 10).forEach((rank, index) => {
+        const row = document.createElement('tr');
+        if (rank.name === nickname) row.classList.add('my-rank');
+        
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${rank.name}</td>
+            <td style="color: #ffd700">${rank.points.toLocaleString()}P</td>
+        `;
+        list.appendChild(row);
+    });
+}
 
 // Update UI
 function updatePointsDisplay() {
     document.getElementById('user-points').innerText = points.toLocaleString();
+    localStorage.setItem('jujuPoints', points);
+    updateRanking(); // Update ranking whenever points change
 }
 
 // Navigation
 function showPage(pageId) {
-    if(isGameRunning) return;
+    if (isGameRunning) return;
     const pages = document.querySelectorAll('.page');
     pages.forEach(p => p.classList.remove('active'));
     document.getElementById(`page-${pageId}`).classList.add('active');
 
-    if(pageId === 'ladder') {
+    if (pageId === 'ladder') {
         initLadder();
     }
 }
 
 // Betting Selection
 function setBet(option, type) {
-    if(isGameRunning) return;
+    if (isGameRunning) return;
     currentBet = option;
     
-    // UI Feedback for Selection
-    const buttons = document.querySelectorAll(`.page.active .bet-options button`);
+    const section = document.getElementById(`page-${type}`);
+    const buttons = section.querySelectorAll(`.bet-options button`);
     buttons.forEach(btn => btn.classList.remove('selected'));
     event.target.classList.add('selected');
 }
 
 // --- Roulette Game Logic ---
 function startRoulette() {
-    if(isGameRunning) return;
-    const amount = parseInt(document.getElementById('roulette-bet-amount').value);
+    if (isGameRunning) return;
+    const amountInput = document.getElementById('roulette-bet-amount');
+    const amount = parseInt(amountInput.value);
     
-    if(!currentBet || isNaN(amount) || amount < 100) {
-        alert('최소 100P 이상 베팅 옵션을 선택해 주세요!');
+    if (!currentBet || isNaN(amount) || amount < 100) {
+        alert('베팅 옵션과 금액(최소 100P)을 확인해 주세요!');
         return;
     }
     
-    if(amount > points) {
+    if (amount > points) {
         alert('보유 포인트가 부족합니다.');
         return;
     }
@@ -51,7 +124,7 @@ function startRoulette() {
     updatePointsDisplay();
 
     const wheel = document.getElementById('roulette-wheel');
-    const extraSpins = 360 * 8; // At least 8 spins for tension
+    const extraSpins = 360 * 8;
     const randomAngle = Math.floor(Math.random() * 360);
     const totalRotation = extraSpins + randomAngle;
 
@@ -59,16 +132,11 @@ function startRoulette() {
     wheel.style.transform = `rotate(${totalRotation}deg)`;
 
     setTimeout(() => {
-        // Correcting the angle calculation: Pointer is at 0 degrees (top).
-        // Since the wheel rotates clockwise, the result is determined by (totalRotation % 360).
-        // Sections: 0-45 Red, 45-90 Black, ...
-        // However, wheel rotation shifts the colors under the pointer. 
-        // A clockwise rotation of X degrees brings the color originally at -X degrees to the top.
         const normalizedAngle = (360 - (randomAngle % 360)) % 360;
         const sectionIndex = Math.floor(normalizedAngle / 45);
         const resultColor = sectionIndex % 2 === 0 ? 'red' : 'black';
 
-        if(resultColor === currentBet) {
+        if (resultColor === currentBet) {
             const winAmount = amount * 2;
             points += winAmount;
             alert(`결과: ${resultColor === 'red' ? '빨강' : '검정'}! 축하합니다! ${winAmount.toLocaleString()}P 획득!`);
@@ -79,36 +147,37 @@ function startRoulette() {
         isGameRunning = false;
         updatePointsDisplay();
         
-        // Reset transition for next spin
         wheel.style.transition = 'none';
         wheel.style.transform = `rotate(${randomAngle}deg)`;
+        currentBet = null;
+        amountInput.value = '';
+        document.querySelectorAll('.page.active .bet-options button').forEach(b => b.classList.remove('selected'));
     }, 4500);
 }
 
-// --- Ladder Game Logic (Animated) ---
+// --- Ladder Game Logic ---
 const canvas = document.getElementById('ladder-canvas');
 const ctx = canvas?.getContext('2d');
 let ladderPaths = [];
 
 function initLadder() {
-    if(!ctx) return;
+    if (!ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ladderPaths = generateLadder();
     drawLadder();
 }
 
 function generateLadder() {
-    const paths = [[], []]; // Vertical lines at x=100 and x=300
+    const connectors = [];
     const steps = 6;
     const h = (canvas.height - 100) / steps;
-    const connectors = [];
 
-    for(let i = 1; i < steps; i++) {
-        if(Math.random() > 0.4) {
+    for (let i = 1; i < steps; i++) {
+        if (Math.random() > 0.4) {
             connectors.push(50 + i * h);
         }
     }
-    return { connectors, steps, h };
+    return { connectors, h };
 }
 
 function drawLadder() {
@@ -116,13 +185,11 @@ function drawLadder() {
     ctx.lineWidth = 6;
     ctx.lineCap = 'round';
 
-    // Vertical lines
     ctx.beginPath();
     ctx.moveTo(100, 50); ctx.lineTo(100, 450);
     ctx.moveTo(300, 50); ctx.lineTo(300, 450);
     ctx.stroke();
 
-    // Horizontal steps
     ladderPaths.connectors.forEach(y => {
         ctx.beginPath();
         ctx.moveTo(100, y);
@@ -130,7 +197,6 @@ function drawLadder() {
         ctx.stroke();
     });
 
-    // Start/End labels
     ctx.fillStyle = '#333';
     ctx.font = 'bold 20px Noto Sans KR';
     ctx.fillText('시작', 80, 35); ctx.fillText('시작', 280, 35);
@@ -138,15 +204,16 @@ function drawLadder() {
 }
 
 async function startLadder() {
-    if(isGameRunning) return;
-    const amount = parseInt(document.getElementById('ladder-bet-amount').value);
+    if (isGameRunning) return;
+    const amountInput = document.getElementById('ladder-bet-amount');
+    const amount = parseInt(amountInput.value);
     
-    if(!currentBet || isNaN(amount) || amount < 100) {
+    if (!currentBet || isNaN(amount) || amount < 100) {
         alert('베팅 옵션과 금액을 확인해 주세요!');
         return;
     }
 
-    if(amount > points) {
+    if (amount > points) {
         alert('보유 포인트가 부족합니다.');
         return;
     }
@@ -155,34 +222,24 @@ async function startLadder() {
     points -= amount;
     updatePointsDisplay();
 
-    // Start from a random side
     let currentX = Math.random() > 0.5 ? 100 : 300;
     let currentY = 50;
     
-    // Animation
     ctx.strokeStyle = '#ffd700';
     ctx.lineWidth = 10;
 
-    const moveAlongLadder = async () => {
-        const sortedConnectors = [...ladderPaths.connectors].sort((a,b) => a - b);
-        
-        for(let targetY of sortedConnectors) {
-            // Move down to connector
-            await animateLine(currentX, currentY, currentX, targetY);
-            currentY = targetY;
-            // Move across connector
-            let nextX = currentX === 100 ? 300 : 100;
-            await animateLine(currentX, currentY, nextX, currentY);
-            currentX = nextX;
-        }
-        // Move to the bottom
-        await animateLine(currentX, currentY, currentX, 450);
-    };
-
-    await moveAlongLadder();
+    const sortedConnectors = [...ladderPaths.connectors].sort((a, b) => a - b);
+    for (let targetY of sortedConnectors) {
+        await animateLine(currentX, currentY, currentX, targetY);
+        currentY = targetY;
+        let nextX = currentX === 100 ? 300 : 100;
+        await animateLine(currentX, currentY, nextX, currentY);
+        currentX = nextX;
+    }
+    await animateLine(currentX, currentY, currentX, 450);
 
     const result = currentX === 100 ? 'odd' : 'even';
-    if(result === currentBet) {
+    if (result === currentBet) {
         const winAmount = Math.floor(amount * 1.9);
         points += winAmount;
         alert(`결과: ${result === 'odd' ? '홀' : '짝'}! 축하합니다! ${winAmount.toLocaleString()}P 획득!`);
@@ -192,31 +249,25 @@ async function startLadder() {
 
     isGameRunning = false;
     updatePointsDisplay();
-    initLadder(); // Reset for next game
+    initLadder();
+    currentBet = null;
+    amountInput.value = '';
+    document.querySelectorAll('.page.active .bet-options button').forEach(b => b.classList.remove('selected'));
 }
 
 function animateLine(x1, y1, x2, y2) {
     return new Promise(resolve => {
         const duration = 400;
         const startTime = performance.now();
-
         function step(now) {
             const progress = Math.min((now - startTime) / duration, 1);
             ctx.beginPath();
             ctx.moveTo(x1, y1);
             ctx.lineTo(x1 + (x2 - x1) * progress, y1 + (y2 - y1) * progress);
             ctx.stroke();
-
-            if (progress < 1) {
-                requestAnimationFrame(step);
-            } else {
-                resolve();
-            }
+            if (progress < 1) requestAnimationFrame(step);
+            else resolve();
         }
         requestAnimationFrame(step);
     });
 }
-
-// Initial Call
-updatePointsDisplay();
-initLadder();
