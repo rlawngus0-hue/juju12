@@ -1,51 +1,52 @@
 :root {
-    --bg-color: #0d4d2b; 
-    --bg-accent: #2b0000; /* 어두운 빨강 배경 */
-    --accent-color: #ffd700; /* 금색 */
-    --red-point: #8b0000; /* 차분한 딥 레드 */
-    --dark-red: #5d0000; /* 더 어두운 와인빛 */
+    --casino-green: #063a1a; /* 깊은 카지노 펠트 녹색 */
+    --gold: #ffcf40; /* 광택 있는 금색 */
+    --gold-gradient: linear-gradient(135deg, #ffcf40 0%, #ffeb3b 50%, #fbc02d 100%);
+    --neon-red: #ff003c; /* 포인트 레드 */
+    --dark-bg: #0a0a0a;
     --text-color: #ffffff;
-    --card-bg: rgba(26, 109, 65, 0.9);
-    --red: #c62828; /* 차분한 레드 */
-    --black: #1a1a1a;
-    --wood: #3e2723;
+    --card-bg: rgba(7, 99, 36, 0.8);
+    --wood: #2c1810;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic:wght@400;700;800&display=swap');
 
 body {
-    font-family: 'Nanum Gothic', sans-serif; /* 둥근 글씨체 */
+    font-family: 'Nanum Gothic', sans-serif;
     margin: 0;
     padding: 0;
-    background: radial-gradient(circle at center, #1a6d41 0%, #0d4d2b 70%, #1a0000 100%);
+    /* 카지노 테이블 펠트 느낌의 배경 */
+    background: radial-gradient(circle at center, #076324 0%, #063a1a 70%, #000000 100%);
     background-attachment: fixed;
     color: var(--text-color);
     overflow-x: hidden;
 }
 
 header {
-    background-color: rgba(0,0,0,0.8);
-    border-bottom: 3px solid var(--dark-red);
-    padding: 10px 0;
+    background: linear-gradient(to bottom, #1a1a1a, #000);
+    border-bottom: 3px solid var(--gold);
+    padding: 15px 0;
     position: sticky;
     top: 0;
     z-index: 1000;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.8);
 }
 
 header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 15px;
+    padding: 0 20px;
 }
 
 #logo {
     font-family: 'Black Han Sans', sans-serif;
-    color: var(--accent-color);
-    font-size: clamp(20px, 5vw, 30px);
-    text-shadow: 2px 2px 0px #000;
+    color: var(--gold);
+    font-size: clamp(24px, 6vw, 36px);
+    text-shadow: 0 0 10px rgba(255, 207, 64, 0.5), 2px 2px 2px #000;
     margin: 0;
-    cursor: pointer; /* 클릭 가능 표시 */
+    cursor: pointer;
+    letter-spacing: 2px;
 }
 
 nav ul {
@@ -57,280 +58,210 @@ nav ul {
 
 nav ul li {
     cursor: pointer;
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: #ccc;
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: #eee;
+    transition: 0.3s;
+    text-shadow: 1px 1px 2px #000;
+}
+
+nav ul li:hover {
+    color: var(--gold);
+    transform: translateY(-2px);
 }
 
 .user-info {
     background: var(--wood);
-    padding: 5px 10px;
-    border-radius: 5px;
-    border: 1.5px solid var(--accent-color);
-    font-size: 0.85rem;
+    padding: 8px 15px;
+    border-radius: 30px; /* 더 둥글게 */
+    border: 2px solid var(--gold);
+    font-size: 0.9rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
 main {
-    padding: 20px 0;
+    padding: 30px 0;
 }
 
 .container {
     width: 95%;
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
 }
 
-.page { display: none; text-align: center; }
-.page.active { display: block; animation: fadeIn 0.4s ease-out; }
+.page { display: none; }
+.page.active { display: block; animation: slideUp 0.5s ease-out; }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.98); }
-    to { opacity: 1; transform: scale(1); }
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* 홈 카드 */
+/* 홈 히어로 및 카드 */
+.hero {
+    text-align: center;
+    background: rgba(0,0,0,0.4);
+    padding: 40px 20px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 207, 64, 0.2);
+    margin-bottom: 30px;
+}
+
 .game-cards {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 15px;
-    margin-top: 20px;
 }
 
 .card {
     background: var(--card-bg);
-    border: 2px solid var(--accent-color);
-    border-left: 8px solid var(--dark-red);
-    border-radius: 10px;
-    padding: 20px;
+    border: 2px solid var(--gold);
+    border-radius: 15px;
+    padding: 25px;
     cursor: pointer;
     transition: 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 5px;
+    background: var(--gold-gradient);
 }
 
 .card:hover {
-    background: #145a32;
-    transform: translateX(5px);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 207, 64, 0.3);
+    background: #08752b;
 }
 
-.card h3 { font-family: 'Black Han Sans', sans-serif; font-size: 1.6rem; margin: 0 0 5px 0; color: var(--accent-color); }
+.card h3 { font-family: 'Black Han Sans', sans-serif; color: var(--gold); margin-bottom: 10px; font-size: 1.8rem; }
 
-/* 게임 공통 */
+/* 게임 컨테이너 */
 .game-container {
-    background: rgba(0,0,0,0.6);
-    padding: 15px;
-    border-radius: 15px;
-    border: 2px solid var(--dark-red);
+    background: rgba(0,0,0,0.7);
+    padding: 25px;
+    border-radius: 25px;
+    border: 3px solid var(--gold);
     display: inline-block;
     max-width: 100%;
-    box-sizing: border-box;
+    box-shadow: 0 0 40px rgba(0,0,0,0.6);
 }
 
 .betting-controls {
-    margin-top: 15px;
+    margin-top: 20px;
     background: var(--wood);
-    padding: 15px;
-    border-radius: 10px;
+    padding: 20px;
+    border-radius: 15px;
     border: 1px solid #5d4037;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* 퀵 베팅 버튼 스타일 */
-.quick-bet-btns {
-    display: flex;
-    gap: 5px;
-    margin-bottom: 10px;
-    justify-content: center;
 }
 
 .btn-quick {
-    padding: 5px 10px;
-    font-size: 0.75rem;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid var(--accent-color);
-    color: var(--accent-color);
-    border-radius: 15px; /* 둥글게 */
-    cursor: pointer;
+    background: #111;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    font-weight: 800;
 }
 
 .btn-quick:hover {
-    background: var(--accent-color);
+    background: var(--gold);
     color: #000;
 }
 
-.bet-options { display: flex; gap: 8px; margin-bottom: 12px; justify-content: center; flex-wrap: wrap; }
-
 button {
-    padding: 8px 12px;
     font-family: 'Black Han Sans', sans-serif;
-    font-size: 0.9rem;
-    border-radius: 4px;
-    cursor: pointer;
-    border: 2px solid transparent;
+    border-radius: 8px;
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.5);
 }
 
-button.selected { border-color: var(--accent-color); background: var(--dark-red); color: white; box-shadow: 0 0 8px var(--accent-color); }
+button.selected {
+    background: var(--neon-red) !important;
+    border-color: var(--gold) !important;
+    color: white;
+    box-shadow: 0 0 15px var(--neon-red);
+}
 
 .btn-start {
-    background: linear-gradient(to bottom, var(--red-point), var(--dark-red));
-    color: white;
-    width: 100%;
-    max-width: 200px;
-    border: 1.5px solid var(--accent-color);
-}
-
-input[type="number"] {
-    width: 120px;
-    padding: 8px;
-    margin-bottom: 10px;
-    border-radius: 4px;
+    background: var(--gold-gradient);
+    color: #000;
+    font-size: 1.2rem;
+    padding: 15px;
     border: none;
-    text-align: center;
+    box-shadow: 0 4px 0px #b8860b;
 }
 
-/* 룰렛 가시성 수정 */
+.btn-start:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0px #b8860b;
+}
+
+/* 룰렛 디자인 */
 .roulette-wrapper {
-    position: relative;
-    width: 280px;
-    height: 280px;
-    margin: 10px auto;
-    display: block !important; /* 가시성 강제 부여 */
-}
-
-#roulette-wheel {
-    width: 100%;
-    height: 100%;
+    width: 300px; height: 300px;
+    border: 10px solid #222;
     border-radius: 50%;
-    border: 6px solid var(--accent-color);
-    box-sizing: border-box;
-    /* conic-gradient 색상 명확화 */
-    background: conic-gradient(
-        #c62828 0deg 45deg,
-        #1a1a1a 45deg 90deg,
-        #c62828 90deg 135deg,
-        #1a1a1a 135deg 180deg,
-        #c62828 180deg 225deg,
-        #1a1a1a 225deg 270deg,
-        #c62828 270deg 315deg,
-        #1a1a1a 315deg 360deg
-    ) !important;
-    box-shadow: 0 0 20px rgba(0,0,0,0.8);
-    transition: transform 4s cubic-bezier(0.1, 0, 0.1, 1);
+    box-shadow: 0 0 0 5px var(--gold);
 }
 
-#roulette-pointer {
-    position: absolute;
-    top: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 35px;
-    color: var(--accent-color);
-    z-index: 20;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
-
-/* 주사위 디자인 */
-.dice-area {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-    justify-content: center;
-}
-
-.dice {
-    width: 80px;
-    height: 80px;
-    background: white;
-    color: #333;
-    border-radius: 15px;
-    font-size: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    border: 4px solid var(--accent-color);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-}
-
-/* 슬롯머신 디자인 */
-.slot-machine {
-    display: flex;
-    gap: 15px;
-    background: #222;
-    padding: 20px;
-    border: 4px solid var(--accent-color);
-    border-radius: 15px;
-    margin-bottom: 20px;
-}
-
-.slot-reel {
-    width: 80px;
-    height: 100px;
-    background: white;
-    border-radius: 5px;
-    font-size: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
-}
-
-/* 하이로우 디자인 */
-.card-display {
+/* 댓글 섹션 가시성 해결 */
+#comment-section {
+    margin-top: 60px;
     padding: 30px;
-    background: #000;
-    border-radius: 15px;
-    border: 2px solid var(--accent-color);
-    margin-bottom: 20px;
+    background: #f8f9fa; /* 밝은 아이보리 배경으로 글자 가시성 확보 */
+    border-radius: 20px;
+    border: 5px solid var(--gold);
+    color: #333; /* 텍스트 색상을 어둡게 강제 */
 }
 
-/* 사다리 캔버스 */
-#ladder-canvas {
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-    background: #fff;
-    border: 4px solid var(--wood);
-    border-radius: 8px;
+#comment-section .ranking-title {
+    color: #063a1a; /* 어두운 색으로 제목 변경 */
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 2rem;
+}
+
+/* Disqus 내부 텍스트 가시성 보강 */
+#disqus_thread {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
 }
 
 /* 랭킹 섹션 */
 #ranking-section {
-    margin-top: 40px;
-    padding: 15px;
-    background: rgba(0,0,0,0.7);
-    border-radius: 12px;
-    border-top: 4px solid var(--dark-red);
+    background: rgba(0,0,0,0.8);
+    border: 2px solid var(--gold);
+    padding: 25px;
+    border-radius: 20px;
 }
 
 .ranking-title {
-    font-family: 'Black Han Sans', sans-serif;
-    color: var(--accent-color);
-    font-size: 1.3rem;
-    margin-bottom: 10px;
+    color: var(--gold);
+    text-shadow: 0 0 10px rgba(255,207,64,0.3);
 }
 
-#ranking-table {
-    width: 100%;
-    font-size: 0.85rem;
+#ranking-table th {
+    background: rgba(255,207,64,0.1);
+    color: var(--gold);
+    border-bottom: 2px solid var(--gold);
 }
 
-#ranking-table th, #ranking-table td {
-    padding: 8px 4px;
-    border-bottom: 1px solid rgba(255,215,0,0.1);
+#ranking-table td {
+    color: #fff;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-/* 모달창 */
-.modal-content {
-    width: 90%;
-    max-width: 350px;
-    background: var(--bg-color);
-    border: 3px solid var(--accent-color);
-    padding: 30px 15px;
-    border-radius: 12px;
+.my-rank {
+    background: rgba(255, 207, 64, 0.2) !important;
 }
 
-.modal-content h2 { font-size: 1.4rem; color: var(--accent-color); }
-
-@media (min-width: 768px) {
-    .game-cards { flex-direction: row; }
+/* 모바일 대응 */
+@media (max-width: 600px) {
+    header .container { flex-direction: column; gap: 10px; }
+    nav ul { gap: 10px; }
+    nav ul li { font-size: 0.8rem; }
+    .game-cards { grid-template-columns: 1fr 1fr; }
 }
