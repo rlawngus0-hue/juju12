@@ -197,8 +197,16 @@ const canvas = document.getElementById('ladder-canvas');
 const ctx = canvas?.getContext('2d');
 let ladderPaths = [];
 
+// Handle window resize for canvas (internal resolution remains fixed, CSS scales)
+window.onresize = () => {
+    // If we need to redraw during resize, but CSS handles scaling mostly
+};
+
 function initLadder() {
     if (!ctx) return;
+    // Keep internal coordinate system 400x500
+    canvas.width = 400;
+    canvas.height = 500;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ladderPaths = generateLadder();
     drawLadder();
