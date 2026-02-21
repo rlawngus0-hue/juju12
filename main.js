@@ -29,6 +29,12 @@ window.onload = () => {
     updateRanking();
     startLiveSimulation(); 
     initLadder();
+    
+    // Explicitly check for roulette element to ensure visibility
+    const wheel = document.getElementById('roulette-wheel');
+    if (wheel) {
+        wheel.style.display = 'block';
+    }
 };
 
 // --- Live Simulation Logic (Mocking other players) ---
