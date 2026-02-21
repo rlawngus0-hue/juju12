@@ -4,13 +4,16 @@ let nickname = localStorage.getItem('jujuNickname') || '';
 let isGameRunning = false;
 let currentBet = null;
 
-// Mock Data for Rankings (Initial)
+// Mock Data for Rankings (Expanded)
 let rankings = JSON.parse(localStorage.getItem('jujuRankings')) || [
     { name: '고니', points: 1000000 },
-    { name: '아귀', points: 800000 },
-    { name: '짝귀', points: 500000 },
-    { name: '평경장', points: 300000 },
-    { name: '정마담', points: 150000 }
+    { name: '아귀', points: 850000 },
+    { name: '짝귀', points: 620000 },
+    { name: '평경장', points: 450000 },
+    { name: '정마담', points: 320000 },
+    { name: '호구', points: 50000 },
+    { name: '박무석', points: 120000 },
+    { name: '고광렬', points: 210000 }
 ];
 
 // Initialize UI
@@ -21,10 +24,32 @@ window.onload = () => {
         document.getElementById('nickname-modal').style.display = 'none';
         document.getElementById('user-nickname').innerText = `[${nickname}]`;
         updatePointsDisplay();
-        updateRanking();
     }
+    updateRanking();
+    startLiveSimulation(); // Start simulation
     initLadder();
 };
+
+// --- Live Simulation Logic (Mocking other players) ---
+function startLiveSimulation() {
+    setInterval(() => {
+        // Randomly pick 1-2 players to change their score
+        const count = Math.floor(Math.random() * 2) + 1;
+        for (let i = 0; i < count; i++) {
+            const playerIndex = Math.floor(Math.random() * rankings.length);
+            const player = rankings[playerIndex];
+            
+            // Don't change the current user's score automatically
+            if (player.name === nickname) continue;
+
+            const win = Math.random() > 0.5;
+            const change = Math.floor(Math.random() * 50000);
+            if (win) player.points += change;
+            else player.points = Math.max(0, player.points - change);
+        }
+        updateRanking();
+    }, 4000); // Every 4 seconds
+}
 
 // --- Nickname & Ranking Logic ---
 function saveNickname() {
@@ -38,7 +63,6 @@ function saveNickname() {
     document.getElementById('nickname-modal').style.display = 'none';
     document.getElementById('user-nickname').innerText = `[${nickname}]`;
     updatePointsDisplay();
-    updateRanking();
 }
 
 function updateRanking() {
@@ -46,7 +70,7 @@ function updateRanking() {
     const userRankIndex = rankings.findIndex(r => r.name === nickname);
     if (userRankIndex !== -1) {
         rankings[userRankIndex].points = points;
-    } else {
+    } else if (nickname) {
         rankings.push({ name: nickname, points: points });
     }
 
@@ -58,6 +82,7 @@ function updateRanking() {
 
     // Render Ranking Table
     const list = document.getElementById('ranking-list');
+    if (!list) return;
     list.innerHTML = '';
     
     rankings.slice(0, 10).forEach((rank, index) => {
@@ -66,7 +91,7 @@ function updateRanking() {
         
         row.innerHTML = `
             <td>${index + 1}</td>
-            <td>${rank.name}</td>
+            <td style="color: ${rank.name === nickname ? 'var(--accent-color)' : 'white'}">${rank.name}</td>
             <td style="color: #ffd700">${rank.points.toLocaleString()}P</td>
         `;
         list.appendChild(row);
