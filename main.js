@@ -48,12 +48,12 @@ function showPage(pageId) {
     currentBet = null;
 }
 
-function setBet(option, type) {
+function setBet(btn, option, type) {
     if (isGameRunning) return;
     currentBet = option;
     const section = document.getElementById(`page-${type}`);
-    section.querySelectorAll(`.bet-options button`).forEach(btn => btn.classList.remove('selected'));
-    event.target.classList.add('selected');
+    section.querySelectorAll(`.bet-options button`).forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
 }
 
 function quickBet(type, value) {

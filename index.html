@@ -76,8 +76,8 @@
                 <canvas id="ladder-canvas" width="400" height="500"></canvas>
                 <div class="betting-controls">
                     <div class="bet-options">
-                        <button onclick="setBet('odd', 'ladder')">홀 (1.9x)</button>
-                        <button onclick="setBet('even', 'ladder')">짝 (1.9x)</button>
+                        <button onclick="setBet(this, 'odd', 'ladder')">홀 (1.9x)</button>
+                        <button onclick="setBet(this, 'even', 'ladder')">짝 (1.9x)</button>
                     </div>
                     <div class="quick-bet-btns">
                         <button class="btn-quick" onclick="quickBet('ladder', 100)">100</button>
@@ -101,8 +101,8 @@
                 </div>
                 <div class="betting-controls">
                     <div class="bet-options">
-                        <button class="red" onclick="setBet('red', 'roulette')">빨강 (2x)</button>
-                        <button class="black" onclick="setBet('black', 'roulette')">검정 (2x)</button>
+                        <button class="red" onclick="setBet(this, 'red', 'roulette')">빨강 (2x)</button>
+                        <button class="black" onclick="setBet(this, 'black', 'roulette')">검정 (2x)</button>
                     </div>
                     <div class="quick-bet-btns">
                         <button class="btn-quick" onclick="quickBet('roulette', 100)">100</button>
@@ -126,9 +126,9 @@
                 </div>
                 <div class="betting-controls">
                     <div class="bet-options">
-                        <button onclick="setBet('small', 'dice')">소 (2-6, 2x)</button>
-                        <button onclick="setBet('big', 'dice')">대 (8-12, 2x)</button>
-                        <button onclick="setBet('seven', 'dice')">7 (5x)</button>
+                        <button onclick="setBet(this, 'small', 'dice')">소 (2-6, 2x)</button>
+                        <button onclick="setBet(this, 'big', 'dice')">대 (8-12, 2x)</button>
+                        <button onclick="setBet(this, 'seven', 'dice')">7 (5x)</button>
                     </div>
                     <div class="quick-bet-btns">
                         <button class="btn-quick" onclick="quickBet('dice', 100)">100</button>
@@ -175,8 +175,8 @@
                 </div>
                 <div class="betting-controls">
                     <div class="bet-options">
-                        <button onclick="setBet('high', 'hilow')">높음 (High)</button>
-                        <button onclick="setBet('low', 'hilow')">낮음 (Low)</button>
+                        <button onclick="setBet(this, 'high', 'hilow')">높음 (High)</button>
+                        <button onclick="setBet(this, 'low', 'hilow')">낮음 (Low)</button>
                     </div>
                     <div class="quick-bet-btns">
                         <button class="btn-quick" onclick="quickBet('hilow', 100)">100</button>
