@@ -1,12 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empty Project</title>
+    <title>주토토 (Jutoto) - 스포츠 시뮬레이션</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header>
+        <div class="container">
+            <h1 id="logo">JU TOTO</h1>
+            <nav>
+                <ul>
+                    <li onclick="showPage('home')">홈</li>
+                    <li onclick="showPage('ladder')">사다리 게임</li>
+                    <li onclick="showPage('roulette')">룰렛 게임</li>
+                </ul>
+            </nav>
+            <div class="user-info">
+                보유 포인트: <span id="user-points">10,000</span>P
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- 홈 페이지 -->
+        <section id="page-home" class="page active">
+            <div class="hero">
+                <h2>신뢰와 재미의 주토토</h2>
+                <p>다양한 게임을 통해 행운을 시험해보세요!</p>
+            </div>
+            <div class="game-cards">
+                <div class="card" onclick="showPage('ladder')">
+                    <h3>사다리타기</h3>
+                    <p>홀/짝, 좌/우 선택의 짜릿함</p>
+                </div>
+                <div class="card" onclick="showPage('roulette')">
+                    <h3>행운의 룰렛</h3>
+                    <p>돌아가는 휠에서 대박을 노리세요</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 사다리 게임 페이지 -->
+        <section id="page-ladder" class="page">
+            <h2>사다리타기 게임</h2>
+            <div class="game-container">
+                <canvas id="ladder-canvas" width="400" height="500"></canvas>
+                <div class="betting-controls">
+                    <div class="bet-options">
+                        <button onclick="setBet('odd')">홀 (1.9x)</button>
+                        <button onclick="setBet('even')">짝 (1.9x)</button>
+                    </div>
+                    <input type="number" id="ladder-bet-amount" placeholder="베팅 금액" min="100">
+                    <button class="btn-start" onclick="startLadder()">게임 시작</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 룰렛 게임 페이지 -->
+        <section id="page-roulette" class="page">
+            <h2>행운의 룰렛</h2>
+            <div class="game-container">
+                <div class="roulette-wrapper">
+                    <div id="roulette-wheel"></div>
+                    <div id="roulette-pointer">▼</div>
+                </div>
+                <div class="betting-controls">
+                    <div class="bet-options">
+                        <button class="red" onclick="setBet('red')">빨강 (2x)</button>
+                        <button class="black" onclick="setBet('black')">검정 (2x)</button>
+                    </div>
+                    <input type="number" id="roulette-bet-amount" placeholder="베팅 금액" min="100">
+                    <button class="btn-start" onclick="startRoulette()">돌리기</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 JU TOTO. 본 사이트는 시뮬레이션용이며 실제 금전 거래를 지원하지 않습니다.</p>
+    </footer>
+
     <script src="main.js"></script>
 </body>
 </html>
