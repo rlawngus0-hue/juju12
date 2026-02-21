@@ -1,6 +1,7 @@
 // Initial State
-let points = parseInt(localStorage.getItem('jujuPoints')) || 10000;
 let nickname = localStorage.getItem('jujuNickname') || '';
+// Load points for the specific nickname
+let points = parseInt(localStorage.getItem('jujuPoints_' + nickname)) || 10000;
 let isGameRunning = false;
 let currentBet = null;
 
@@ -26,20 +27,19 @@ window.onload = () => {
         updatePointsDisplay();
     }
     updateRanking();
-    startLiveSimulation(); // Start simulation
+    startLiveSimulation(); 
     initLadder();
 };
 
 // --- Live Simulation Logic (Mocking other players) ---
 function startLiveSimulation() {
     setInterval(() => {
-        // Randomly pick 1-2 players to change their score
         const count = Math.floor(Math.random() * 2) + 1;
         for (let i = 0; i < count; i++) {
             const playerIndex = Math.floor(Math.random() * rankings.length);
             const player = rankings[playerIndex];
             
-            // Don't change the current user's score automatically
+            // Current user score is NOT changed by simulation
             if (player.name === nickname) continue;
 
             const win = Math.random() > 0.5;
@@ -48,7 +48,7 @@ function startLiveSimulation() {
             else player.points = Math.max(0, player.points - change);
         }
         updateRanking();
-    }, 4000); // Every 4 seconds
+    }, 4000); 
 }
 
 // --- Nickname & Ranking Logic ---
@@ -60,13 +60,23 @@ function saveNickname() {
     }
     nickname = input;
     localStorage.setItem('jujuNickname', nickname);
+    // Load points for the new nickname
+    points = parseInt(localStorage.getItem('jujuPoints_' + nickname)) || 10000;
+    
     document.getElementById('nickname-modal').style.display = 'none';
     document.getElementById('user-nickname').innerText = `[${nickname}]`;
     updatePointsDisplay();
+    updateRanking();
+}
+
+function logout() {
+    if(isGameRunning) return;
+    localStorage.removeItem('jujuNickname');
+    location.reload();
 }
 
 function updateRanking() {
-    // Current user ranking update
+    // Current user ranking update in the global rankings array
     const userRankIndex = rankings.findIndex(r => r.name === nickname);
     if (userRankIndex !== -1) {
         rankings[userRankIndex].points = points;
@@ -77,15 +87,15 @@ function updateRanking() {
     // Sort rankings by points
     rankings.sort((a, b) => b.points - a.points);
     
-    // Save to localStorage
-    localStorage.setItem('jujuRankings', JSON.stringify(rankings.slice(0, 15)));
+    // Save rankings to localStorage
+    localStorage.setItem('jujuRankings', JSON.stringify(rankings.slice(0, 30)));
 
     // Render Ranking Table
     const list = document.getElementById('ranking-list');
     if (!list) return;
     list.innerHTML = '';
     
-    rankings.slice(0, 10).forEach((rank, index) => {
+    rankings.slice(0, 15).forEach((rank, index) => {
         const row = document.createElement('tr');
         if (rank.name === nickname) row.classList.add('my-rank');
         
@@ -101,8 +111,10 @@ function updateRanking() {
 // Update UI
 function updatePointsDisplay() {
     document.getElementById('user-points').innerText = points.toLocaleString();
-    localStorage.setItem('jujuPoints', points);
-    updateRanking(); // Update ranking whenever points change
+    if (nickname) {
+        localStorage.setItem('jujuPoints_' + nickname, points);
+    }
+    updateRanking();
 }
 
 // Navigation
