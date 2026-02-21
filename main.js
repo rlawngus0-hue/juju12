@@ -1,1 +1,1 @@
-// Add JS here
+// JavaScript cleared
